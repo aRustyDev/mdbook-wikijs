@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.arusty.dev/wikijs/document.schema.json",
+  "title": "Wiki.js Markdown Document",
+  "description": "Schema for validating Wiki.js-compatible markdown documents",
+  "type": "object",
+  "properties": {
+    "frontmatter": {
+      "type": "object",
+      "description": "YAML frontmatter for Wiki.js page metadata",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Page title",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "description": "Page description for SEO and search"
+        },
+        "published": {
+          "type": "boolean",
+          "description": "Whether the page is published",
+          "default": true
+        },
+        "tags": {
+          "type": "array",
+          "description": "Page tags for categorization",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "editor": {
+          "type": "string",
+          "description": "Wiki.js editor type",
+          "enum": ["markdown", "asciidoc", "code"],
+          "default": "markdown"
+        }
+      },
+      "required": ["title"],
+      "additionalProperties": true
+    },
+    "body": {
+      "type": "string",
+      "description": "Markdown body content"
+    },
+    "path": {
+      "type": "string",
+      "description": "Wiki.js page path (without extension)",
+      "pattern": "^/[a-z0-9][a-z0-9-/]*$"
+    }
+  },
+  "required": ["frontmatter", "body"],
+  "$defs": {
+    "calloutClass": {
+      "type": "string",
+      "description": "Valid Wiki.js callout classes",
+      "enum": ["{.is-info}", "{.is-warning}", "{.is-danger}", "{.is-success}"]
+    },
+    "listClass": {
+      "type": "string",
+      "description": "Valid Wiki.js list classes",
+      "enum": ["{.links-list}", "{.grid-list}"]
+    },
+    "headerClass": {
+      "type": "string",
+      "description": "Valid Wiki.js header classes",
+      "enum": ["{.tabset}"]
+    }
+  }
+}
